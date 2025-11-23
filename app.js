@@ -259,34 +259,43 @@ function handleReviewSubmit(e) {
 function saveDataToLocalDB(formData) {
     const timestamp = new Date().toLocaleString('uk-UA');
     
-    // Використовуємо email з форми, або "Гість"
-    const emailFromForm = formData.get('email') || 'Гість';
+    // Отримуємо дані з форми, використовуючи fallback для порожніх полів
+    const name = formData.get('name') || 'Гість';
+    const message = formData.get('message') || 'Не вказано';
+    const phone = formData.get('phone') || 'Не вказано';
+    const emailFromForm = formData.get('email') || 'Не вказано';
+
+    // 1. Визначення ключа для Чату та Контакту
+    let chatKey = emailFromForm;
+    let contactInfo = emailFromForm + (phone !== 'Не вказано' ? ` / ${phone}` : '');
     
-    // Якщо email з форми не співпадає з поточним логіном, використовуємо його для чату.
-    // Якщо email не надано у формі, використовуємо "Гість" + time_id.
-    let contactEmail = emailFromForm;
-    if (emailFromForm === 'Гість') {
-        contactEmail = 'guest_' + Date.now();
-    } else if (emailFromForm && !localStorage.getItem('currentUserEmail')) {
-        // Якщо email вказано, але користувач не залогінений, це новий унікальний контакт.
+    // Якщо email не вказано, використовуємо унікальний ID Гостя
+    if (emailFromForm === 'Не вказано' || emailFromForm === '') {
+        const guestId = 'guest_' + Date.now();
+        chatKey = guestId;
+        contactInfo = phone !== 'Не вказано' ? `Тел: ${phone}` : 'Контакт не вказано';
     }
 
-    const name = formData.get('name') || 'Гість';
-    const message = formData.get('message') || 'Повідомлення';
-    const displayEmail = emailFromForm === 'Гість' ? contactEmail : emailFromForm; // Для відображення в таблиці
-
-    // А) Замовлення
-    const newOrder = { id: Date.now(), date: timestamp, name: name, contact: displayEmail, message: message, status: 'Нове' };
+    // 2. Збереження Замовлення
+    const newOrder = { 
+        id: Date.now(), 
+        date: timestamp, 
+        name: name, 
+        contact: contactInfo, // У таблиці буде email/телефон або ID гостя
+        message: message, 
+        status: 'Нове' 
+    };
     const orders = JSON.parse(localStorage.getItem('site_orders')) || [];
     orders.unshift(newOrder);
     localStorage.setItem('site_orders', JSON.stringify(orders));
 
-    // Б) Чат
+    // 3. Збереження Чату (використовуємо chatKey)
     let chatDB = JSON.parse(localStorage.getItem('chat_db')) || {};
-    // Використовуємо "справжній" email або унікальний guest_ID для ключа чату
-    const chatKey = emailFromForm === 'Гість' ? contactEmail : emailFromForm;
-
-    if(!chatDB[chatKey]) { chatDB[chatKey] = { name: name, messages: [] }; }
+    
+    if(!chatDB[chatKey]) { 
+        chatDB[chatKey] = { name: name, messages: [] }; 
+    }
+    // Перше повідомлення в чаті = текст із заявки
     chatDB[chatKey].messages.push({ sender: 'user', text: message, time: timestamp });
     localStorage.setItem('chat_db', JSON.stringify(chatDB));
 }
@@ -297,8 +306,8 @@ function renderUserOrders() {
     const tbody = document.getElementById('userOrdersTable');
     const email = localStorage.getItem('currentUserEmail');
     const orders = JSON.parse(localStorage.getItem('site_orders')) || [];
-    // Зверніть увагу: тут ми фільтруємо по email користувача, який залогінився
-    const myOrders = orders.filter(o => o.contact === email);
+    // Для залогіненого користувача, шукаємо за його email
+    const myOrders = orders.filter(o => o.contact.includes(email));
     
     if(myOrders.length === 0) { tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:20px; color:#666">У вас немає активних заявок</td></tr>'; return; }
     tbody.innerHTML = myOrders.map(o => `<tr><td>${o.date}</td><td>${o.message}</td><td><span class="status-badge">${o.status}</span></td></tr>`).join('');
@@ -328,12 +337,17 @@ document.getElementById('userChatForm')?.addEventListener('submit', (e) => {
     const text = document.getElementById('userMsgInput').value.trim();
     if(!text) return;
     const email = localStorage.getItem('currentUserEmail');
-    let name = "Користувач";
+    
+    // Створюємо тимчасову FormData для виклику saveDataToLocalDB, імітуючи форму
+    const fd = new FormData(); 
+    fd.append('email', email); 
+    // Імя користувача беремо з профілю
     const u = JSON.parse(localStorage.getItem('user_'+email));
-    if(u) name = u.name;
+    if(u) fd.append('name', u.name); else fd.append('name', 'Користувач');
 
-    const fd = new FormData(); fd.append('email', email); fd.append('name', name); fd.append('message', text);
-    saveDataToLocalDB(fd);
+    fd.append('message', text);
+    saveDataToLocalDB(fd); // Збереже як нове повідомлення в чаті
+    
     document.getElementById('userMsgInput').value = '';
     renderUserChat();
 });
@@ -427,6 +441,7 @@ window.clearAllOrders = function() {
 }
 window.adminLogout = function() { 
     localStorage.removeItem('isAdmin'); 
+    localStorage.removeItem('currentUserEmail'); // Очищаємо email адміна при виході
     location.reload(); 
 }
 window.userLogout = function() { 
@@ -492,11 +507,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     accBtn.onclick = () => {
         if(localStorage.getItem('isAdmin') === 'true') { 
             document.getElementById('adminModal').classList.remove('hidden'); 
-            document.body.style.overflow = 'hidden'; // Ensure body is locked
-            // --- КРИТИЧНИЙ ФІКС: Оновлюємо дані при відкритті адмінки ---
+            document.body.style.overflow = 'hidden'; 
             renderAdminOrders(); 
             renderAdminChatList();
-            // -----------------------------------------------------------
             return; 
         }
         const curEmail = localStorage.getItem('currentUserEmail');
@@ -529,7 +542,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if(em===ADMIN_CREDENTIALS.email && pass===ADMIN_CREDENTIALS.password) {
             closeModal('authModal'); 
             localStorage.setItem('isAdmin', 'true'); 
-            localStorage.setItem('currentUserEmail', em); // Записуємо email адміна, щоб він не реєструвався
+            localStorage.setItem('currentUserEmail', em); // Зберігаємо email адміна
             accBtn.textContent='👑 Адмін'; accBtn.classList.add('admin-logged'); accBtn.classList.remove('logged-in');
             accBtn.style.cssText="border-color:#FFD700;color:#000;background:#FFD700";
             alert("Успішний вхід! Ви увійшли як Super Admin."); 
@@ -579,10 +592,21 @@ document.addEventListener('DOMContentLoaded', async () => {
       e.preventDefault(); 
       const btn = e.target.querySelector('button');
       const originalText = btn.textContent;
+      
+      // Додаткова перевірка перед відправкою
+      const name = e.target.querySelector('input[name="name"]').value.trim();
+      const phone = e.target.querySelector('input[name="phone"]').value.trim();
+      if (!name || (!phone && !e.target.querySelector('input[name="email"]').value.trim())) {
+          alert("Будь ласка, заповніть принаймні ім'я та телефон або email.");
+          return;
+      }
+      
       btn.textContent = 'Відправка...';
       
       setTimeout(() => {
         saveDataToLocalDB(new FormData(e.target));
+        
+        // Оновлюємо інтерфейс
         btn.textContent = 'Успішно!';
         btn.style.background = '#00E676';
         document.getElementById('formResult').textContent = 'Менеджер зв\'яжеться з вами протягом 10 хвилин.';
