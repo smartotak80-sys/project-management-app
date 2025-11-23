@@ -1,0 +1,155 @@
+  {
+    "company": "Agro Premium",
+    "products": [
+      {
+        "id": 1,
+        "brand": "John Deere",
+        "name": "John Deere 8R 410",
+        "type": "tractor",
+        "price": "9 500 000 ₴",
+        "desc": "Флагманський трактор для великих господарств. Потужність 410 к.с. та інтелектуальна система управління.",
+        "specs": {"Потужність":"410 к.с.","Двигун":"9.0L PowerTech™","Трансмісія":"e23™"},
+        "img": "https://storage.yandexcloud.net/storage.yasno.media/nat-geo/images/2020/6/25/0fc978aba29e466e8eb4ffc946532d5e.max-1200x800.jpg"
+      },
+      {
+        "id": 2,
+        "brand": "New Holland",
+        "name": "New Holland CR10.90 Revelation",
+        "type": "combine",
+        "price": "18 000 000 ₴",
+        "desc": "Світовий рекордсмен зі збору врожаю. Двороторна технологія Twin Rotor™.",
+        "specs": {"Двигун":"6 цил. FPT","Бункер":"14.500 л","Продуктивність":">30 т/год"},
+        "img": "https://images.unsplash.com/photo-1530267981375-f0de93cdf538?q=80&w=1000&auto=format&fit=crop"
+      },
+      {
+        "id": 3,
+        "brand": "John Deere",
+        "name": "John Deere S780 Combine",
+        "type": "combine",
+        "price": "14 200 000 ₴",
+        "desc": "Високопродуктивний однороторний комбайн серії S700. Автоматизоване налаштування HarvestSmart™.",
+        "specs": {"Двигун":"13.5L PowerTech™","Бункер":"14.100 л","Жатка":"12 м"},
+        "img": "https://images.unsplash.com/photo-1595247998720-4c0f4520183f?q=80&w=1000&auto=format&fit=crop"
+      },
+      {
+        "id": 4,
+        "brand": "New Holland",
+        "name": "New Holland T8.435 Genesis",
+        "type": "tractor",
+        "price": "11 500 000 ₴",
+        "desc": "Потужний і ефективний трактор із трансмісією Auto Command™. Ідеально підходить для оранки.",
+        "specs": {"Потужність":"435 к.с.","Трансмісія":"Auto Command","Вантажопідйомність":"10 000 кг"},
+        "img": "https://static-cse.canva.com/blob/847132/paulskorupskas7KLaxLbSXAunsplash2.jpg"
+      },
+      {
+        "id": 5,
+        "brand": "John Deere",
+        "name": "John Deere 9R 640",
+        "type": "tractor",
+        "price": "19 800 000 ₴",
+        "desc": "Артикульований трактор з чотирма ведучими колесами. Максимальна тягова потужність.",
+        "specs": {"Потужність":"640 к.с.","Трансмісія":"e23 PowerShift","Вага":"24 000 кг"},
+        "img": "https://images.unsplash.com/photo-1628172905007-8e62d4734a70?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      },
+    {
+        "id": 6,
+        "brand": "New Holland",
+        "name": "New Holland FR920 Forage Cruiser",
+        "type": "forage harvester",
+        "price": "22 000 000 ₴",
+        "desc": "Високоефективний кормозбиральний комбайн для зеленої маси. Точний зріз та висока швидкість.",
+        "specs": {"Двигун":"920 к.с.","Продуктивність":"100 т/год","Жатка":"до 10 м"},
+        "img": "https://images.unsplash.com/photo-1628109724036-646700c2f60e?q=80&w=1000&auto=format&fit=crop"
+      },
+      {
+        "id": 7,
+        "brand": "John Deere",
+        "name": "John Deere R4045 Sprayer",
+        "type": "sprayer",
+        "price": "7 200 000 ₴",
+        "desc": "Самохідний обприскувач із системою точного землеробства. Ширина захвату до 36 метрів.",
+        "specs": {"Об'єм бака":"4500 л","Штанга":"36 м","Кліренс":"1.55 м"},
+        "img": "https://images.unsplash.com/photo-1623000632296-189f36f34f6b?q=80&w=1000&auto=format&fit=crop"
+      },
+      {
+        "id": 8,
+        "brand": "New Holland",
+        "name": "New Holland CX8.80",
+        "type": "combine",
+        "price": "12 500 000 ₴",
+        "desc": "Класичний клавішний комбайн із великою площею сепарації. Надійність та простота обслуговування.",
+        "specs": {"Двигун":"415 к.с.","Бункер":"10 000 л","Клавіші":"8"},
+        "img": "https://images.unsplash.com/photo-1563249052-520863032488?q=80&w=1000&auto=format&fit=crop"
+      },
+      {
+        "id": 9,
+        "brand": "John Deere",
+        "name": "John Deere 6155R",
+        "type": "tractor",
+        "price": "5 800 000 ₴",
+        "desc": "Універсальний трактор середньої потужності. Ідеальний баланс ваги та потужності.",
+        "specs": {"Потужність":"155 к.с.","Трансмісія":"AutoQuad™ Plus","Вага":"7 500 кг"},
+        "img": "https://images.unsplash.com/photo-1549419134-b2586520d297?q=80&w=1000&auto=format&fit=crop"
+      },
+      {
+        "id": 10,
+        "brand": "New Holland",
+        "name": "New Holland Guardian SP310F",
+        "type": "sprayer",
+        "price": "8 500 000 ₴",
+        "desc": "Великий самохідний обприскувач з передньою штангою для кращої видимості.",
+        "specs": {"Об'єм бака":"3785 л","Штанга":"36.5 м","Кліренс":"1.83 м"},
+        "img": "https://images.unsplash.com/photo-1605634509172-1b15d9a94436?q=80&w=1000&auto=format&fit=crop"
+      },
+      {
+        "id": 11,
+        "brand": "John Deere",
+        "name": "John Deere 7250R",
+        "type": "tractor",
+        "price": "7 100 000 ₴",
+        "desc": "Потужний трактор для середніх і великих полів. Відмінна паливна ефективність.",
+        "specs": {"Потужність":"250 к.с.","Двигун":"6.8L PowerTech™","Трансмісія":"AutoPowr™"},
+        "img": "https://images.unsplash.com/photo-1542861254-463876af5d31?q=80&w=1000&auto=format&fit=crop"
+      },
+      {
+        "id": 12,
+        "brand": "New Holland",
+        "name": "New Holland T7.270 Auto Command",
+        "type": "tractor",
+        "price": "6 500 000 ₴",
+        "desc": "Універсальний трактор із безступінчастою трансмісією для максимальної ефективності.",
+        "specs": {"Потужність":"270 к.с.","Трансмісія":"Auto Command","Макс. швидкість":"50 км/год"},
+        "img": "https://images.unsplash.com/photo-1549417912365-512c9842a275?q=80&w=1000&auto=format&fit=crop"
+      },
+      {
+        "id": 13,
+        "brand": "John Deere",
+        "name": "John Deere X9 1100 Combine",
+        "type": "combine",
+        "price": "25 000 000 ₴",
+        "desc": "Флагманський комбайн нового покоління. Неперевершена продуктивність при збиранні зерна.",
+        "specs": {"Двигун":"13.6L PowerTech™","Бункер":"16.200 л","Продуктивність":">40 т/год"},
+        "img": "https://images.unsplash.com/photo-1596245041040-0255b6300790?q=80&w=1000&auto=format&fit=crop"
+      },
+      {
+        "id": 14,
+        "brand": "New Holland",
+        "name": "New Holland BigBaler 1290 High Density",
+        "type": "baler",
+        "price": "3 900 000 ₴",
+        "desc": "Прес-підбирач високої щільності, створює ідеальні прямокутні тюки.",
+        "specs": {"Ширина підбору":"2.3 м","Щільність":"Висока","Тюк":"120x90 см"},
+        "img": "https://images.unsplash.com/photo-1627916965809-90656a738c64?q=80&w=1000&auto=format&fit=crop"
+      },
+      {
+        "id": 15,
+        "brand": "John Deere",
+        "name": "John Deere W235 Windrower",
+        "type": "windrower",
+        "price": "4 500 000 ₴",
+        "desc": "Самохідна косарка-валкоукладач для збору сіна та фуражу.",
+        "specs": {"Потужність":"235 к.с.","Ширина захвату":"9.1 м","Навігація":"StarFire™"},
+        "img": "https://static-cse.canva.com/blob/847132/paulskorupskas7KLaxLbSXAunsplash2.jpg"
+      }
+    ]
+  }
